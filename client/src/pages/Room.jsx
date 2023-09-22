@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player'
 
 const Room = () => {
     const { socket } = useSocket();
-    const { peer, createOffer, createAns, createRemoteAns } = usePeer();
+    const { peer, createOffer, createAns, createRemoteAns, sendStream, remoteStream } = usePeer();
     const [myStream,setMyStream] = useState(null)
 
 
@@ -35,6 +35,7 @@ const Room = () => {
 
     const getUserMediaStream = useCallback(async ()=>{
         const stream = await navigator.mediaDevices.getUserMedia({audio:true,video:true});
+        
         setMyStream(stream)
     },[])
 
@@ -58,6 +59,8 @@ const Room = () => {
         <div>
             <h1>Room Page</h1>
             <ReactPlayer url={myStream} playing muted/>
+            <ReactPlayer url={remoteStream} playing muted/>
+            <button onClick={()=>sendStream(myStream)}>Sent my video</button>
         </div>
     )
 }
