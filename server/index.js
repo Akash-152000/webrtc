@@ -9,6 +9,7 @@ app.use(bodyParser.json())
 const emailToSocket = new Map();               // create this to map email id to room id
 
 io.on('connection',(socket)=>{
+    console.log("User Connected");
     socket.on('join-room',(data)=>{            // on Join room event you will recieve data from client side
         const {roomId, email} = data;          // destructure roomid and email sent from front end
         emailToSocket.set(email, socket.id)    // map email with id of the socket
