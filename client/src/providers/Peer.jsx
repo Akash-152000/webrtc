@@ -1,6 +1,10 @@
-const { createContext, useMemo } = require("react");
+const { createContext, useMemo, useContext } = require("react");
 
 const PeerContext = createContext();
+
+export const usePeer = () =>{
+        return useContext(PeerContext)
+}
 
 export const PeerProvider = (props)=>{
 
@@ -22,6 +26,7 @@ export const PeerProvider = (props)=>{
         await peer.setLocalDescription(offer);      // offer needs to be stored on our local state
         return offer
     }
+
 
     return(
         <PeerContext.Provider value={{peer, createOffer}}>
