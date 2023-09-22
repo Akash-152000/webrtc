@@ -1,20 +1,24 @@
-import { createContext, useMemo } from 'react';
+import { createContext, useMemo, useContext } from 'react';
 import { io } from 'socket.io-client'
 
 
 const SocketContext = createContext();
 
-const Socketprovider = (props) => {
+export const useSocket =()=> {
+    return useContext(SocketContext)       // use this custom hook to use the context
+}
 
-    const socket = useMemo(() => io({
-        host:'localhost',
-        port:8001
+const SocketProvider = (props) => {
+
+    const socket = useMemo(() => io({      // useMemo caches the socket so it won't be executed on every render
+        host: 'localhost',
+        port: 8001
     }), [])
     return (
-        <Socketprovider.Provider value={{ socket }}>
+        <SocketContext.Provider value={{ socket }}>
             {props.children}
-        </Socketprovider.Provider>
+        </SocketContext.Provider>
     )
 }
 
-export default Socketprovider;
+export default SocketProvider;
