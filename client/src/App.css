@@ -1,0 +1,29 @@
+.home-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+input,button{
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+button{
+    cursor: pointer;
+    width:100px;
+}
+
+button:hover{
+    background: #dadada;
+}
