@@ -10,10 +10,7 @@ export const useSocket =()=> {
 
 const SocketProvider = (props) => {
 
-    const socket = useMemo(() => io({      // useMemo caches the socket so it won't be executed on every render
-        host: 'localhost',
-        port: 8001
-    }), [])
+    const socket = useMemo(() => io('http://localhost:8001'), [])
     return (
         <SocketContext.Provider value={{ socket }}>
             {props.children}
