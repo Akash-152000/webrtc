@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useSocket} from '../providers/Socket'
+import {useNavigate} from 'react-router-dom'
 
 export const Home = () => {
   const {socket} = useSocket()
+  const navigate = useNavigate()
 
   const [email,setEmail] = useState('')
   const [roomId,setRoomId] = useState('')
@@ -11,6 +13,11 @@ export const Home = () => {
     socket.emit('join-room',{email,roomId})
   }
 
+  useEffect(()=>{
+    socket.on('joined-room',({roomId})=>{
+      navigate(`/room/${roomId}`)
+    })
+  },[socket])
 
   return (
     <div className='home-container'>
