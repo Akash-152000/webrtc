@@ -26,7 +26,7 @@ export const Home = () => {
     return ()=>{
       socket.off('joined-room',handleJoinRoom)
     }
-  },[socket])
+  },[socket, handleJoinRoom])
 
   return (
     <div className='home-container'>

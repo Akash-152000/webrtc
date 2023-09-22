@@ -29,15 +29,20 @@ export const PeerProvider = (props) => {
         return offer
     }
 
-    const createAnswer = async (offer)=>{
-        await peer.setRemoteDescription(offer)
-        const answer = offer.createAnswer() 
-        await peer.setLocalDescription(answer)
+    const createAns = async (offer)=>{
+        console.log("inside me");
+        await peer.setRemoteDescription(offer)      // set the offer from the user to remote desc 
+        const answer = peer.createAnswer()         // create answer
+        await peer.setLocalDescription(answer)      // set the answer to local desc
         return answer
     }
 
+    const createRemoteAns = async (ans) =>{
+        await peer.setRemoteDescription(ans)        // save the answer of user in remote
+    }
+
     return (
-        <PeerContext.Provider value={{ peer, createOffer }}>
+        <PeerContext.Provider value={{ peer, createOffer, createAns, createRemoteAns }}>
             {props.children}
         </PeerContext.Provider>
     )

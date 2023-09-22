@@ -10,12 +10,13 @@ const emailToSocket = new Map(); // create this to map email id to room id
 const socketToEmail = new Map(); // create this to map email id to room id
 
 io.on("connection", (socket) => {
+  console.log('User connected');
   socket.on("join-room", (data) => {
     // on Join room event you will recieve data from client side
     const { roomId, email } = data; // destructure roomid and email sent from front end
     emailToSocket.set(email, socket.id); // map email with id of the socket
     socketToEmail.set(socket.id,email);  // map id with email of the socket
-    console.log(emailToSocket);
+    console.log('New User Joined with email: ',email);
     socket.join(roomId); // join a socket room with roomId
 
     socket.emit("joined-room", { roomId }); // server says joined-room now we can listen this on client side
@@ -29,6 +30,14 @@ io.on("connection", (socket) => {
     const socketId = emailToSocket.get(email)
     socket.to(socketId).emit('incomming-call',{from:fromEmail,offer})
   });
+
+  socket.on('call-accepted',(data)=>{
+    const {email,ans} = data
+    const socketId = emailToSocket.get(email)
+    socket.to(socketId).emit('call-accepted',{ans})
+
+})
+
 });
 
 app.listen(8000, () => console.log("Server running at port 8000"));
