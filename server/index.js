@@ -11,15 +11,13 @@ const emailToSocket = new Map();               // create this to map email id to
 io.on('connection',(socket)=>{
     console.log("User Connected");
     socket.on('join-room',(data)=>{            // on Join room event you will recieve data from client side
-        const {roomId, email} = data;          // destructure roomid and email sent from front end
-        console.log(roomId,email);
+        const {roomId, email} = data;          // destructure roomid and email sent from front end  
         emailToSocket.set(email, socket.id)    // map email with id of the socket
         socket.join(roomId)                    // join a socket room with roomId
         
         socket.emit('joined-room',{roomId})    // server says joined-room now we can listen this on client side
 
-        socket.broadcast.to(roomId)
-        .emit('user-joined',{email})  //when user joins the room, broadcast this to everyone in that room
+        socket.broadcast.to(roomId).emit('user-joined',{email})  //when user joins the room, broadcast this to everyone in that room
     })
 })
 
