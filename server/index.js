@@ -16,6 +16,8 @@ io.on('connection',(socket)=>{
         emailToSocket.set(email, socket.id)    // map email with id of the socket
         socket.join(roomId)                    // join a socket room with roomId
         
+        socket.emit('joined-room',{roomId})    // server says joined-room now we can listen this on client side
+
         socket.broadcast.to(roomId)
         .emit('user-joined',{email})  //when user joins the room, broadcast this to everyone in that room
     })
