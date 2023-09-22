@@ -3,6 +3,7 @@ import {useSocket} from '../providers/Socket'
 
 export const Home = () => {
   const {socket} = useSocket()
+  console.log(socket);
 
   socket.emit('join-room',{roomId:'1',email:'a@export.com'})
 

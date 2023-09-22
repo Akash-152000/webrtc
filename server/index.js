@@ -12,6 +12,7 @@ io.on('connection',(socket)=>{
     console.log("User Connected");
     socket.on('join-room',(data)=>{            // on Join room event you will recieve data from client side
         const {roomId, email} = data;          // destructure roomid and email sent from front end
+        console.log(roomId,email);
         emailToSocket.set(email, socket.id)    // map email with id of the socket
         socket.join(roomId)                    // join a socket room with roomId
         
